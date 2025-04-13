@@ -6,6 +6,8 @@ import ast
 # Define the serial port for your printer
 port = "/dev/ttyAMA0"  # Adjust this if necessary, based on your setup
 
+screw_pitch = 0.5
+
 def connect_to_printer(port, baudrate=115200, timeout=5):
     try:
         ser = serial.Serial(port, baudrate, timeout=timeout)
@@ -69,24 +71,15 @@ def preheat(ser, filament_type, filament_profiles):
     else:
         print(f"Filament type '{filament_type}' not found in profiles.")
 
-def convert_distance_to_fractional_turns(distance, screw_pitch=0.5):
+def convert_distance_to_fractional_turns(distance):
     rat = round(distance / screw_pitch, 1)
     direction = "CW" if rat > 0 else "CCW"
     return f"{abs(rat)} {direction}"
 
-def convert_distance_to_degrees(distance, screw_pitch=0.5):
+def convert_distance_to_degrees(distance):
     deg = round((distance / screw_pitch) * 360)
     direction = "CCW" if deg < 0 else "CW"
     return f"{abs(deg)}°{direction}"
-
-def convert_distance_to_fractional_turns(distance, screw_pitch=0.5):
-    rat = round(distance / screw_pitch, 1)
-    if abs(rat) < 0.05:  # If very close to zero
-        return "0"
-    if abs(rat) < 0.07:  # If less than 0.07, consider it 0CCW
-        return "0CCW"
-    direction = "CCW" if rat < 0 else "CW"
-    return f"1/10{direction}" if abs(rat) >= 0.1 else f"0{direction}"
 
 def format_7x7_grid(points):
     grid_size = 7
@@ -118,11 +111,6 @@ def format_3x3_screw_adjustments(points):
     output += f"{convert_distance_to_degrees(top_left)}\t{convert_distance_to_degrees(top_middle)}\t{convert_distance_to_degrees(top_right)}\n"
     output += f"{convert_distance_to_degrees(middle_left)}\t0\t{convert_distance_to_degrees(middle_right)}\n"
     output += f"{convert_distance_to_degrees(bottom_left)}\t{convert_distance_to_degrees(bottom_center)}\t{convert_distance_to_degrees(bottom_right)}\n"
-
-    output += "\nFractional Turns:\n"
-    output += f"{convert_distance_to_fractional_turns(top_left)}\t{convert_distance_to_fractional_turns(top_middle)}\t{convert_distance_to_fractional_turns(top_right)}\n"
-    output += f"{convert_distance_to_fractional_turns(middle_left)}\t0\t{convert_distance_to_fractional_turns(middle_right)}\n"
-    output += f"{convert_distance_to_fractional_turns(bottom_left)}\t{convert_distance_to_fractional_turns(bottom_center)}\t{convert_distance_to_fractional_turns(bottom_right)}\n"
 
     return output
 

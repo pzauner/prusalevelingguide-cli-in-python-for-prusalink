@@ -79,11 +79,6 @@ Degrees:
 13°CCW  1°CCW   6°CCW
 21°CCW  0       30°CCW
 7°CCW   11°CCW  21°CCW
-
-Fractional Turns:
-0       0       0
-1/10CCW 0       1/10CCW
-0       0       1/10CCW
 ```
 
 
