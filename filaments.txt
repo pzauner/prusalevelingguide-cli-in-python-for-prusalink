@@ -1,0 +1,11 @@
+{
+    "PLA": {"bed temp": 60, "nozzle temp": 215},
+    "PETG": {"bed temp": 85, "nozzle temp": 235},
+    "ABS": {"bed temp": 100, "nozzle temp": 240},
+    "ASA": {"bed temp": 95, "nozzle temp": 240},
+    "HIPS": {"bed temp": 95, "nozzle temp": 235},
+    "SBS": {"bed temp": 70, "nozzle temp": 225},
+    "Nylon": {"bed temp": 80, "nozzle temp": 250},
+    "TPU": {"bed temp": 60, "nozzle temp": 225},
+    "PVA": {"bed temp": 70, "nozzle temp": 225},
+}
